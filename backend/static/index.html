@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard - AI Threat Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L3 6V11C3 16.5 6.8 21.7 12 23C17.2 21.7 21 16.5 21 11V6L12 2Z" fill="url(#paint0_linear)"/>
+                    <path d="M11 7H13V13H11V7ZM11 15H13V17H11V15Z" fill="white"/>
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="12" y1="2" x2="12" y2="23" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#3B82F6"/>
+                            <stop offset="1" stop-color="#8B5CF6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>PhishGuard</h1>
+            </div>
+            <p class="subtitle">Enterprise-grade AI Phishing & Malware Detection</p>
+        </header>
+
+        <main>
+            <div class="tabs">
+                <button class="tab active" data-target="url-scan">URL Scanner</button>
+                <button class="tab" data-target="sms-scan">SMS Scanner</button>
+            </div>
+
+            <div class="tab-content active" id="url-scan">
+                <form id="url-form">
+                    <div class="input-group">
+                        <input type="url" id="url-input" placeholder="https://example.com/login" required>
+                        <button type="submit" class="btn-primary" id="url-submit">
+                            <span>Scan URL</span>
+                            <div class="loader hidden"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-content" id="sms-scan">
+                <form id="sms-form">
+                    <div class="input-group">
+                        <textarea id="sms-input" placeholder="Enter suspicious SMS message here..." rows="3" required></textarea>
+                        <button type="submit" class="btn-primary" id="sms-submit">
+                            <span>Scan SMS</span>
+                            <div class="loader hidden"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="results" class="results-container hidden">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h2 id="result-threat-level">Safe</h2>
+                        <div class="confidence-badge" id="result-confidence">99% Confidence</div>
+                    </div>
+                    
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <span class="label">Input:</span>
+                            <span class="value" id="result-input"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">AI Model Verdict:</span>
+                            <span class="value" id="result-is-phishing"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Scan Time:</span>
+                            <span class="value" id="result-time"></span>
+                        </div>
+                    </div>
+
+                    <div class="reasons-box">
+                        <h3>Detection Insights</h3>
+                        <ul id="result-reasons"></ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

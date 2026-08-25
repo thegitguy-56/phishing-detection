@@ -114,6 +114,7 @@ serviceAccountKey.json
 
 # Test outputs
 test_results.json
+qa_reports/
 htmlcov/
 .coverage
 .pytest_cache/

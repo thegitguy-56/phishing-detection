@@ -12,7 +12,8 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -110,17 +111,13 @@ app.include_router(history_router, prefix="/api/v1")
 app.include_router(report_router,  prefix="/api/v1")
 
 
-# ─── Root & Health ────────────────────────────────────────────────────────────
+# ─── Static Web App & Health ──────────────────────────────────────────────────
 
-PUBLIC_API_URL = os.getenv("PUBLIC_API_URL", "https://rohanv56-phishing-api.hf.space")
+app.mount("/static", StaticFiles(directory="backend/static"), name="static")
 
 @app.get("/", tags=["Root"])
 async def root():
-    return {
-        "message": "Phishing & Malware Detection API is running",
-        "docs":    f"{PUBLIC_API_URL}/docs",
-        "version": "1.0.0",
-    }
+    return FileResponse("backend/static/index.html")
 
 
 @app.get("/health", tags=["Health"])
