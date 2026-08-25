@@ -1,0 +1,247 @@
+name: e2e.yml
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # ── 1. Selenium — Website Tests (300) ─────────────────────────────────────────
+  selenium:
+    name: Selenium — Website Tests (300)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl requests httpx fastapi uvicorn pandas numpy python-dotenv
+
+      - name: 🚀 Run Selenium Website E2E Suite (300 Cases)
+        run: |
+          python -m qa_automation.run_qa_pipeline --suite selenium --mode suite --output-dir qa_reports
+
+      - name: 📤 Upload Suite Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-results
+          path: qa_reports/selenium_results.json
+          retention-days: 7
+
+  # ── 2. Appium — Android Tests (300) ───────────────────────────────────────────
+  appium:
+    name: Appium — Android Tests (300)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl requests httpx fastapi uvicorn pandas numpy python-dotenv
+
+      - name: 🚀 Run Appium Android Mobile Suite (300 Cases)
+        run: |
+          python -m qa_automation.run_qa_pipeline --suite appium --mode suite --output-dir qa_reports
+
+      - name: 📤 Upload Suite Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-results
+          path: qa_reports/appium_results.json
+          retention-days: 7
+
+  # ── 3. Unit Tests — API (300) ─────────────────────────────────────────────────
+  api:
+    name: Unit Tests — API (300)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl requests httpx fastapi uvicorn pandas numpy python-dotenv
+
+      - name: 🚀 Run API Integration Suite (300 Cases)
+        run: |
+          python -m qa_automation.run_qa_pipeline --suite api --mode suite --output-dir qa_reports
+
+      - name: 📤 Upload Suite Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-results
+          path: qa_reports/api_results.json
+          retention-days: 7
+
+  # ── 4. Validation Tests (300) ─────────────────────────────────────────────────
+  validation:
+    name: Validation Tests (300)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl requests httpx fastapi uvicorn pandas numpy python-dotenv
+
+      - name: 🚀 Run Validation & Security Suite (300 Cases)
+        run: |
+          python -m qa_automation.run_qa_pipeline --suite validation --mode suite --output-dir qa_reports
+
+      - name: 📤 Upload Suite Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-results
+          path: qa_reports/validation_results.json
+          retention-days: 7
+
+  # ── 5. Deployment Status (300) ────────────────────────────────────────────────
+  deployment:
+    name: Deployment Status (300)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl requests httpx fastapi uvicorn pandas numpy python-dotenv
+
+      - name: 🚀 Run Deployment Status Suite (300 Cases)
+        run: |
+          python -m qa_automation.run_qa_pipeline --suite deployment --mode suite --output-dir qa_reports
+
+      - name: 📤 Upload Suite Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-results
+          path: qa_reports/deployment_results.json
+          retention-days: 7
+
+  # ── 6. Load Testing — Performance (300) ───────────────────────────────────────
+  load_testing:
+    name: Load Testing — Performance (300)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl requests httpx fastapi uvicorn pandas numpy python-dotenv
+
+      - name: 🚀 Run Load Testing Performance Suite (300 Cases)
+        run: |
+          python -m qa_automation.run_qa_pipeline --suite load --mode suite --output-dir qa_reports
+
+      - name: 📤 Upload Suite Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: load-results
+          path: qa_reports/load_results.json
+          retention-days: 7
+
+  # ── 7. Compile Master Report & Deploy ─────────────────────────────────────────
+  compile_master_report:
+    name: Compile Master Report & Deploy
+    needs: [selenium, appium, api, validation, deployment, load_testing]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: 📥 Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: backend/requirements.txt
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl requests httpx fastapi uvicorn pandas numpy python-dotenv
+
+      - name: 📥 Download All Suite Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: qa_reports_artifacts
+
+      - name: 🔄 Consolidate Results & Compile Master Report (1,800 Test Cases)
+        run: |
+          mkdir -p qa_reports
+          cp qa_reports_artifacts/*/* qa_reports/ 2>/dev/null || true
+          python -m qa_automation.run_qa_pipeline \
+            --mode master \
+            --output-dir qa_reports \
+            --excel-name AmbiEye_Master_QA_Test_Report.xlsx
+
+      - name: 📊 Upload Master Excel Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AmbiEye-Master-QA-Test-Report-Excel
+          path: qa_reports/AmbiEye_Master_QA_Test_Report.xlsx
+          retention-days: 30
+
+      - name: 📋 Publish Dashboard to GitHub Step Summary
+        run: |
+          if [ -f qa_reports/test_summary.md ]; then
+            cat qa_reports/test_summary.md >> $GITHUB_STEP_SUMMARY
+          fi
